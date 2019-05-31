@@ -1,0 +1,208 @@
+#! /bin/bash 
+ # To declare static Array  
+arr=(prakhar ankit 1 rishabh manish abhinav) 
+ # To print all elements of array 
+echo ${arr[@]}        
+echo ${arr[*]}        
+echo ${arr[@]:0}     
+echo ${arr[*]:0}     
+Output:
+
+prakhar ankit 1 rishabh manish abhinav
+prakhar ankit 1 rishabh manish abhinav
+prakhar ankit 1 rishabh manish abhinav
+prakhar ankit 1 rishabh manish abhinav
+
+
+To Print first element
+
+# To print first element 
+echo ${arr[0]}         
+echo ${arr}         
+
+Output:
+prakhar
+prakhar
+
+
+To Print Selected index element
+
+ echo ${ARRAYNAME[INDEXNR]}
+
+# To print particular element 
+echo ${arr[3]}         
+echo ${arr[1]}         
+Output:
+rishabh
+ankit
+
+
+To print elements from a particular index
+
+ echo ${ARRAYNAME[WHICH_ELEMENT]:STARTING_INDEX}
+
+# To print elements from a particular index 
+echo ${arr[@]:0}      
+echo ${arr[@]:1} 
+echo ${arr[@]:2}      
+echo ${arr[0]:1}     
+
+Output:
+prakhar ankit 1 rishabh manish abhinav
+ankit 1 rishabh manish abhinav
+1 rishabh manish abhinav
+prakhar
+
+To print elements in range
+
+ echo ${ARRAYNAME[WHICH_ELEMENT]:STARTING_INDEX:COUNT_ELEMENT}
+
+# To print elements in range 
+echo ${arr[@]:1:4}      
+echo ${arr[@]:2:3}      
+echo ${arr[0]:1:3}     
+
+Output:
+ankit 1 rishabh manish
+1 rishabh manish
+rak
+To count Length of in Array
+
+To count the length of a particular element in Array.
+Use #(hash) to print length of particular element
+
+# Length of Particular element 
+echo ${#arr[0]}         
+echo ${#arr}         
+
+Output:
+
+7
+7
+
+
+To count length of Array.
+
+# Size of an Array 
+echo ${#arr[@]}         
+echo ${#arr[*]}         
+
+Output:
+
+6
+6
+
+To Search in Array
+
+
+
+arr[@] : All Array Elements.
+/Search_using_Regular_Expression/ : Search in Array
+Search Returns 1 if it found the pattern else it return zero. It does not alter the original array elements.
+
+
+# Search in Array 
+echo ${arr[@]/*[aA]*/}     
+
+Output:
+1
+To Search & Replace in Array
+
+//Search_using_Regular_Expression/Replace : Search & Replace
+
+Search & Replace does not change in Original Value of Array Element. It just returned the new value. So you can store this value in same or different variable.
+
+# Replacing Substring Temporary 
+echo ${arr[@]//a/A}          
+echo ${arr[@]}              
+echo ${arr[0]//r/R}         
+
+Output:
+
+prAkhAr Ankit 1 rishAbh mAnish AbhinAv
+prakhar ankit 1 rishabh manish abhinav
+RakhaR
+To delete Array Variable in Shell Script?
+
+To delete index-1 element
+
+ unset ARRAYNAME[1]
+To delete the whole Array
+
+ unset ARRAYNAME
+
+
+
+
+#! /bin/bash 
+# To declare static Array  
+arr=(prakhar ankit 1 rishabh manish abhinav) 
+  
+# To print all elements of array 
+echo ${arr[@]}        # prakhar ankit 1 rishabh manish abhinav 
+echo ${arr[*]}        # prakhar ankit 1 rishabh manish abhinav 
+echo ${arr[@]:0}    # prakhar ankit 1 rishabh manish abhinav 
+echo ${arr[*]:0}    # prakhar ankit 1 rishabh manish abhinav 
+  
+# To print first element 
+echo ${arr[0]}        # prakhar 
+echo ${arr}            # prakhar 
+  
+# To print particular element 
+echo ${arr[3]}        # rishabh 
+echo ${arr[1]}        # ankit 
+  
+# To print elements from a particular index 
+echo ${arr[@]:0}    # prakhar ankit 1 rishabh manish abhinav 
+echo ${arr[@]:1}    # ankit 1 rishabh manish abhinav 
+echo ${arr[@]:2}    # 1 rishabh manish abhinav 
+echo ${arr[0]:1}    # rakhar 
+  
+# To print elements in range 
+echo ${arr[@]:1:4}    # ankit 1 rishabh manish 
+echo ${arr[@]:2:3}    # 1 rishabh manish 
+echo ${arr[0]:1:3}    # rak 
+  
+# Length of Particular element 
+echo ${#arr[0]}        # 7 
+echo ${#arr}        # 7 
+  
+# Size of an Array 
+echo ${#arr[@]}        # 6 
+echo ${#arr[*]}        # 6 
+  
+# Search in Array 
+echo ${arr[@]/*[aA]*/}    # 1 
+  
+# Replacing Substring Temporary 
+echo ${arr[@]//a/A}        # prAkhAr Ankit 1 rishAbh mAnish AbhinAv 
+echo ${arr[@]}            # prakhar ankit 1 rishabh manish abhinav 
+echo ${arr[0]//r/R}        # pRakhaR 
+
+
+
+Output:
+
+prakhar ankit 1 rishabh manish abhinav
+prakhar ankit 1 rishabh manish abhinav
+prakhar ankit 1 rishabh manish abhinav
+prakhar ankit 1 rishabh manish abhinav
+prakhar
+prakhar
+rishabh
+ankit
+prakhar ankit 1 rishabh manish abhinav
+ankit 1 rishabh manish abhinav
+1 rishabh manish abhinav
+rakhar
+ankit 1 rishabh manish
+1 rishabh manish
+rak
+7
+7
+6
+6
+1
+prAkhAr Ankit 1 rishAbh mAnish AbhinAv
+prakhar ankit 1 rishabh manish abhinav
+pRakhaR

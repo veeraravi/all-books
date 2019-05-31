@@ -1,0 +1,168 @@
+The UNIX Shell Script for Loop 
+
+Although there are two variants of the for loop... 
+
+Syntax 1:
+
+for variable [ in list_of_items ]
+do
+   statement 1
+   statement 2
+   statement 3
+   ...
+   statement n
+done
+
+Syntax 2:
+
+for (( variable_initialization; loop_condition; variable_update ))
+do
+   statement 1
+   statement 2
+   statement 3
+   ...
+   statement n
+done
+
+The syntax for the while loop is as follows... 
+
+while
+do
+   statement 1
+   statement 2
+   statement 3
+   ...
+   statement n
+done
+
+
+
+Ex1:
+
+#!/bin/bash
+for number in 1 2 3 4 5
+do
+echo $number
+done
+
+
+Ex2:
+
+#!/bin/bash
+for number in {1..10}
+do
+echo "$number "
+done
+
+
+Ex3:
+
+#!/bin/bash
+for number in {0..100..10}
+do
+echo "$number "
+done
+exit 0
+
+EX4:
+
+#!/bin/bash
+for ((number=1;number < 100;number++))
+{
+if (( $number % 5 == 0 ))
+then
+echo "$number is divisible by 5 "
+fi
+}
+
+Ex5:
+
+#!/bin/bash
+i=1
+for day in Mon Tue Wed Thu Fri
+do
+ echo "Weekday $((i++)) : $day"
+done
+
+Ex6:
+
+#!/bin/bash
+i=1
+for day in Mon, Tue, Wed, Thu, Fri
+do
+ echo "Weekday $((i++)) : $day"
+done
+
+
+Ex7:
+
+#!/bin/bash
+i=1
+for day in "Mon Tue Wed Thu Fri"
+do
+ echo "Weekday $((i++)) : $day"
+done
+
+Ex8:
+
+#!/bin/bash
+i=1
+weekdays="Mon Tue Wed Thu Fri"
+for day in $weekdays
+do
+ echo "Weekday $((i++)) : $day"
+done
+
+
+Ex9:
+
+#!/bin/bash
+i=1
+for day in Mon Tue Wed Thu Fri
+do
+ echo "Weekday $((i++)) : $day"
+ if [ $i -eq 3 ]; then
+   break;
+ fi
+done
+
+
+Ex10:
+
+#!/bin/bash
+i=1
+for day in Mon Tue Wed Thu Fri Sat Sun
+do
+ echo -n "Day $((i++)) : $day"
+ if [ $i -eq 7 -o $i -eq 8 ]; then
+   echo " (WEEKEND)"
+   continue;
+ fi
+ echo " (weekday)"
+done
+
+
+Ex11:
+
+#!/bin/bash
+for (( i=1; i <= 5; i++ ))
+do
+ echo "Random number $i: $RANDOM"
+done
+
+
+Ex12:
+
+#!/bin/bash
+for num in {1..10}
+do
+ echo "Number: $num"
+done
+
+
+Ex13:
+#!/bin/bash
+for num in {1..10..2}
+do
+ echo "Number: $num"
+done

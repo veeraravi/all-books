@@ -1,0 +1,63 @@
+Example 1:
+
+$ str1="Hello"
+$ str2="World"
+$ str3="$str1 $str2"
+$ echo $str3
+> Hello World
+
+
+Example 2:
+
+$ str1="Hello"
+$ str2="$str1 World"
+$ echo $str2
+> Hello World
+
+
+Example 3:
+
+$ str1="Hello"
+$ str2="World"
+$ str3=$str1$str2
+$ echo $str3
+> HelloWorld
+
+
+1. Identify String Length inside Bash Shell Script
+
+Syntax:
+
+${#string}
+
+
+Ex:
+
+#! /bin/bash
+var="Welcome to the geekstuff"
+echo ${#var}
+
+2. Extract a Substring from a Variable
+
+Syntax:
+
+${string:position}
+
+or
+
+${string:position:length}
+
+Ex:
+
+#! /bin/bash
+var="Welcome to the geekstuff"
+echo ${var:15}
+echo ${var:15:4}
+
+3. EXACT VARIABLE SUBSTITUTION IN SHELL SCRIPTING
+
+Ex:
+
+VAR1=abc
+echo "$VAR1xyz"
+echo "${VAR1}xyz"

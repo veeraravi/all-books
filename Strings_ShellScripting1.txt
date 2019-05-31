@@ -1,0 +1,451 @@
+String Operators | Shell Script:
+
+Pre-Requisite: Conditional Statement in Shell Script
+
+There are many operators in Shell Script some of them are discussed based on string.
+
+Equal operator (=): This operator is used to check whether two strings are equal.
+
+Syntax:
+Operands1 = Operand2
+
+Example:
+
+#!/bin/sh  
+str1="GeeksforGeeks"; 
+str2="geeks"; 
+if [ $str1 = $str2 ] 
+then 
+    echo "Both string are same"; 
+else
+    echo "Both string are not same"; 
+fi 
+
+Output:
+Both string are not same
+
+
+Not Equal operator (!=): This operator is used when both operands are not equal.
+Syntax:
+Operands1 != Operands2
+
+Example:
+
+#!/bin/sh 
+str1="GeeksforGeeks"; 
+str2="geeks"; 
+if [ $str1 != $str2 ] 
+then 
+    echo "Both string are not same"; 
+else
+    echo "Both string are same"; 
+fi 
+
+
+Output:
+Both string are not same
+
+
+Less then (\<): It is a conditional operator and used to check operand1 is less then operand2.
+Syntax:
+Operand1 \< Operand2
+
+Example:
+
+#!/bin/sh  
+str1="GeeksforGeeks"; 
+str2="Geeks"; 
+if [ $str1 \< $str2 ] 
+then 
+    echo "$str1 is less then $str2"; 
+else
+    echo "$str1 is not less then $str2"; 
+fi 
+
+Output:
+GeeksforGeeks is not less then Geeks
+
+
+Greater then (\>): This operator is used to check the operand1 is greater then operand2.
+Syntax:
+Operand1 \> Operand2
+
+Example:
+
+#!/bin/sh 
+str1="GeeksforGeeks"; 
+str2="Geeks"; 
+if [ $str1 \> $str2 ] 
+then 
+    echo "$str1 is greater then $str2"; 
+else
+    echo "$str1 is less then $str2"; 
+fi 
+
+Output:
+GeeksforGeeks is greater then Geeks
+
+Check string length greater then 0: This operator is used to check the string is not empty.
+Syntax:
+[ -n Operand ]
+Example:
+
+#!/bin/sh 
+str="GeeksforGeeks"; 
+if [ -n $str ] 
+then 
+    echo "String is not empty"; 
+else
+    echo "String is empty"; 
+fi 
+
+Output:
+String is not empty
+Check string length equal to 0: This operator is used to check the string is empty.
+Syntax:
+[ -z Operand ]
+
+Example:
+
+#!/bin/sh 
+str=""; 
+if [ -z $str ] 
+then 
+    echo "String is empty"; 
+else
+    echo "String is not empty"; 
+fi 
+
+Output:
+String is empty
+
+
+
+The strings are equal
+Use the following syntax:
+
+STRING1 = STRING2
+
+Example
+#!/bin/bash
+read -s -p "Enter your password " pass
+echo 
+if test "$pass" = "tom"
+then
+    echo "You are allowed to login!"
+fi
+
+The strings are not equal
+Use the following syntax:
+
+STRING1 != STRING2
+
+Example
+#!/bin/bash
+read -s -p "Enter your password " pass
+echo 
+if test "$pass" != "tom"
+then
+    echo "Wrong password!"
+fi
+
+The length of STRING is zero
+
+Use the following syntax (this is useful to see if variable is empty or not):
+
+-z STRING
+Example
+#!/bin/bash
+read -s -p "Enter your password " pass
+echo 
+if test -z $pass 
+then
+    echo "No password was entered!!! Cannot verify an empty password!!!"	
+    exit 1
+fi
+if test "$pass" != "tom"
+then
+    echo "Wrong password!"
+fi
+
+
+1. Identify String Length inside Bash Shell Script
+${#string}
+The above format is used to get the length of the given bash variable.
+
+$ cat len.sh
+#! /bin/bash
+var="Welcome to the geekstuff"
+echo ${#var}
+
+Output:
+$ ./len.sh
+24
+
+2. Extract a Substring from a Variable inside Bash Shell Script
+Bash provides a way to extract a substring from a string. The following example expains how to parse n characters starting from a particular position.
+${string:position}
+
+Extract substring from $string at $position
+${string:position:length}
+
+Extract $length of characters substring from $string starting from $position. In the below example, first echo statement 
+returns the substring starting from 15th position. Second echo statement returns the 4 characters starting from 15th position. 
+Length must be the number greater than or equal to zero.
+
+$ cat substr.sh
+#! /bin/bash
+var="Welcome to the geekstuff"
+echo ${var:15}
+echo ${var:15:4}
+
+output:
+$ ./substr.sh
+geekstuff
+geek
+
+
+3. Shortest Substring Match
+Following syntax deletes the shortest match of $substring from front of $string
+
+${string#substring}
+Following syntax deletes the shortest match of $substring from back of $string
+
+${string%substring}
+Following sample shell script explains the above two shortest substring match concepts.
+
+$ cat shortest.sh
+#! /bin/bash
+filename="bash.string.txt"
+echo ${filename#*.}
+echo ${filename%.*}
+
+Output:
+$ ./shortest.sh
+After deletion of shortest match from front: string.txt
+
+
+4. Longest Substring Match
+Following syntax deletes the longest match of $substring from front of $string
+
+${string##substring}
+Following syntax deletes the longest match of $substring from back of $string
+
+${string%%substring}
+Following sample shell script explains the above two longest substring match concepts.
+
+$ cat longest.sh
+#! /bin/bash
+filename="bash.string.txt"
+echo "After deletion of longest match from front:" ${filename##*.}
+echo "After deletion of longest match from back:" ${filename%%.*}
+
+Output:
+$ ./longest.sh
+After deletion of longest match from front: txt
+After deletion of longest match from back: bash
+
+
+5. Find and Replace String Values inside Bash Shell Script
+Replace only first match
+${string/pattern/replacement}
+It matches the pattern in the variable $string, and replace only the first match of the pattern with the replacement.
+
+$ cat firstmatch.sh
+#! /bin/bash
+filename="bash.string.txt"
+echo "After Replacement:" ${filename/str*./operations.}
+
+Output:
+$ ./firstmatch.sh
+After Replacement: bash.operations.txt
+
+
+Replace all the matches
+${string//pattern/replacement}
+It replaces all the matches of pattern with replacement.
+
+$ cat allmatch.sh
+#! /bin/bash
+filename="Path of the bash is /bin/bash"
+echo "After Replacement:" ${filename//bash/sh}
+
+Output:
+$ ./allmatch.sh
+After Replacement: Path of the sh is /bin/sh
+Taking about find and replace, refer to our earlier articles – sed substitute examples and Vim find and replace.
+
+Replace beginning and end
+${string/#pattern/replacement}
+Following syntax replaces with the replacement string, only when the pattern matches beginning of the $string.
+
+${string/%pattern/replacement}
+Following syntax replaces with the replacement string, only when the pattern matches at the end of the given $string.
+
+$ cat posmatch.sh
+#! /bin/bash
+filename="/root/admin/monitoring/process.sh"
+echo "Replaced at the beginning:" ${filename/#\/root/\/tmp}
+echo "Replaced at the end": ${filename/%.*/.ksh}
+
+Output:
+$ ./posmatch.sh
+Replaced at the beginning: /tmp/admin/monitoring/process.sh
+Replaced at the end: /root/admin/monitoring/process.ksh
+After deletion of shortest match from back: bash.string
+
+
+Example:
+#!/bin/sh
+
+a="abc"
+b="efg"
+
+if [ $a = $b ]
+then
+   echo "$a = $b : a is equal to b"
+else
+   echo "$a = $b: a is not equal to b"
+fi
+
+if [ $a != $b ]
+then
+   echo "$a != $b : a is not equal to b"
+else
+   echo "$a != $b: a is equal to b"
+fi
+
+if [ -z $a ]
+then
+   echo "-z $a : string length is zero"
+else
+   echo "-z $a : string length is not zero"
+fi
+
+if [ -n $a ]
+then
+   echo "-n $a : string length is not zero"
+else
+   echo "-n $a : string length is zero"
+fi
+
+if [ $a ]
+then
+   echo "$a : string is not empty"
+else
+   echo "$a : string is empty"
+fi
+
+
+The above script will generate the following result -
+
+abc = efg: a is not equal to b
+abc != efg : a is not equal to b
+-z abc : string length is not zero
+-n abc : string length is not zero
+abc : string is not empty
+
+
+
+Numeric Comparisons
+This is one the most common evaluation method i.e. comparing two or more numbers. 
+We will now create a script for doing numeric comparison, but before we do that we need to know the 
+parameters that are used to compare numerical values . Below mentioned is the list of parameters used for numeric comparisons
+
+num1 -eq num2                  check if 1st  number is equal to 2nd number
+num1 -ge num2                  checks if 1st  number  is greater than or equal to 2nd number
+num1 -gt num2                  checks if 1st  number is greater than 2nd number
+num1 -le num2                   checks if 1st number is less than or equal to 2nd number
+num1 -lt num2                   checks if 1st  number  is less than 2nd number
+num1 -ne num2                  checks if 1st  number  is not equal to 2nd number
+
+
+Example:
+
+#!/bin/bash
+# Script to do numeric comparisons
+var1=10
+var2=20
+if [ $var2 -gt $var1 ]
+    then
+        echo "$var2 is greater than $var1"
+fi
+# Second comparison
+If [ $var1 -gt 30]
+    then
+        echo "$var is greater than 30"
+    else
+        echo "$var1 is less than 30"
+fi
+
+Strings Comparisons
+When creating a bash script, we might also be required to compare two or more strings & comparing strings can 
+be a little tricky. For doing strings comparisons, parameters used are
+
+var1 = var2     checks if var1 is the same as string var2
+var1 != var2    checks if var1 is not the same as var2
+var1 < var2     checks if var1 is less than var2
+var1 > var2     checks if var1 is greater than var2
+-n var1             checks if var1 has a length greater than zero
+-z var1             checks if var1 has a length of zero
+
+Example:
+
+#!/bin/bash
+# Script to do string equality comparison
+name=linuxtechi
+if [ $USER = $name ]
+        then
+                echo "User exists"
+        else
+                echo "User not found"
+fi
+# script to check string comparisons
+var1=a
+var2=z
+var3=Z
+if [ $var1 \> $var2 ]
+        then
+                echo "$var1 is greater"
+        else
+                echo "$var2 is greater"
+fi
+# Lower case  & upper case comparisons
+if [ $var3 \> $var1 ]
+        then
+                echo "$var3 is greater"
+        else
+                echo "$var1 is greater"
+fi
+
+
+File comparison
+This might be the most important function of comparison & is probably the most used than any other comparison. 
+The Parameters that are used for file comparison are
+
+-d file                        checks if the file exists and is it’s a directory
+-e file                        checks if the file exists on system
+-w file                       checks if the file exists on system and if it is writable
+-r file                        checks if the file exists on system and it is readable
+-s file                        checks if the file exists on system and it is not empty
+-f file                         checks if the file exists on system and it is a file
+-O file                       checks if the file exists on system and if it’s is owned by the current user
+-G file                        checks if the file exists and the default group is the same as the current user
+-x file                         checks if the file exists on system and is executable
+file A -nt file B         checks if file A is newer than file B
+
+
+Example:
+
+#!/bin/bash
+# Script to check file comparison
+dir=/home/linuxtechi
+if [ -d $dir ]
+        then
+                echo "$dir is a directory"
+                cd $dir
+                ls -a
+        else
+                echo "$dir is not exist"
+fi
+file A -ot file B          checks if file A is older than file B

@@ -1,0 +1,177 @@
+Decision Making:
+
+Unix Shell supports following forms of if…else statement -
+
+if...fi statement
+if...else...fi statement
+if...elif...else...fi statement
+
+
+The if statement has the following syntax:
+
+if commands; then
+commands
+[elif commands; then
+commands...]
+[else
+commands]
+fi
+
+
+
+Ex1:
+
+#!/bin/sh
+a=10
+b=20
+
+if [ $a == $b ]
+then
+   echo "a is equal to b"
+fi
+
+if [ $a != $b ]
+then
+   echo "a is not equal to b"
+fi
+
+
+Ex2:
+#!/bin/sh
+
+a=10
+b=20
+
+if [ $a == $b ]
+then
+   echo "a is equal to b"
+else
+   echo "a is not equal to b"
+fi
+
+Ex3:
+
+#!/bin/sh
+
+a=10
+b=20
+
+if [ $a == $b ]
+then
+   echo "a is equal to b"
+elif [ $a -gt $b ]
+then
+   echo "a is greater than b"
+elif [ $a -lt $b ]
+then
+   echo "a is less than b"
+else
+   echo "None of the condition met"
+fi
+
+
+Ex4:
+
+#!/bin/sh
+
+# Prompt for a user name...
+echo "Please enter your age:"
+read AGE
+
+if [ "$AGE" -lt 20 ] || [ "$AGE" -ge 50 ]; then
+	echo "Sorry, you are out of the age range."
+elif [ "$AGE" -ge 20 ] && [ "$AGE" -lt 30 ]; then
+	echo "You are in your 20s"
+elif [ "$AGE" -ge 30 ] && [ "$AGE" -lt 40 ]; then
+	echo "You are in your 30s"
+elif [ "$AGE" -ge 40 ] && [ "$AGE" -lt 50 ]; then
+	echo "You are in your 40s"
+fi
+
+
+Ex5:
+
+#!/bin/bash
+
+if [ "$#" -gt 0 ]
+then
+    echo "There's Beans"
+fi
+
+if [ "$1" = "cool" ]
+then
+echo "Cool Beans"
+fi
+
+Ex6:
+
+#!/bin/bash
+
+if [ "$1" = "cool" ]
+then
+    echo "Cool Beans"
+else
+    echo "Not Cool Beans"
+fi
+
+
+Ex7:
+
+#!/bin/bash
+
+if [ "$1" = "cool" ]
+then
+    echo "Cool Beans"
+elif [ "$1" = "neat" ]
+then
+    echo "Neato cool"
+else
+    echo "Not Cool Beans"
+fi
+
+Ex8:
+
+#!/bin/bash
+
+if [ -f "$1" ]
+then
+    echo "$1 is a file"
+else
+    echo "$1 is not a file"
+fi
+
+
+
+
+There are many different ways that an conditional statement can be 
+These are summarized here:
+
+
+String Comparison	Description
+Str1 = Str2		Returns true if the strings are equal
+Str1 != Str2		Returns true if the strings are not equal
+-n Str1			Returns true if the string is not null
+-z Str1			Returns true if the string is null
+
+
+Numeric Comparison	Description
+expr1 -eq expr2		Returns true if the expressions are equal
+expr1 -ne expr2		Returns true if the expressions are not equal
+expr1 -gt expr2		Returns true if expr1 is greater than expr2
+expr1 -ge expr2		Returns true if expr1 is greater than or equal to expr2
+expr1 -lt expr2		Returns true if expr1 is less than expr2
+expr1 -le expr2		Returns true if expr1 is less than or equal to expr2
+! expr1		Negates the result of the expression
+
+
+File Conditionals	Description
+-d file		True if the file is a directory
+-e file		True if the file exists (note that this is not particularly portable, thus -f is generally used)
+-f file		True if the provided string is a file
+-g file		True if the group id is set on a file
+-r file		True if the file is readable
+-s file		True if the file has a non-zero size
+-u		True if the user id is set on a file
+-w		True if the file is writable
+-x		True if the file is an executable
+

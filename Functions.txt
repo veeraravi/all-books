@@ -1,0 +1,256 @@
+Functions:
+
+Creating a function is fairly easy. 
+They may be written in two different formats:
+
+function_name () {
+<commands>
+}
+
+or
+
+function function_name {
+<commands>
+}
+
+A few points to note:
+Either of the above methods of specifying a function is valid. 
+Both operate the same and there is no advantage or disadvantage 
+to one over the other. It's really just personal preference.
+
+In other programming languages it is common to have arguments
+passed to the function listed inside the brackets (). 
+In Bash they are there only for decoration and you never put 
+anything inside them.
+
+The function definition ( the actual function itself) must appear 
+in the script before any calls to the function.
+
+Example:
+
+#!/bin/bash
+# Basic function
+print_something () {
+echo Hello I am a function
+}
+
+print_something
+print_something
+
+
+Passing Arguments:
+
+It is often the case that we would like the function to 
+process some data for us. We may send data to the function 
+in a similar way to passing command line arguments to a script. 
+We supply the arguments directly after the function name. 
+Within the function they are accessible as $1, $2, etc.
+
+Example:
+
+#!/bin/bash
+# Passing arguments to a function
+print_something () {
+echo Hello $1
+}
+print_something Mars
+print_something Jupiter
+
+
+Return Values:
+Most other programming languages have the concept of a 
+return value for functions, a means for the function 
+to send data back to the original calling location. 
+
+Bash functions don't allow us to do this. 
+They do however allow us to set a return status. 
+
+Similar to how a program or command exits with an exit 
+status which indicates whether it succeeded or not. 
+We use the keyword return to indicate a return status.
+
+Example:
+
+#!/bin/bash
+# Setting a return status for a function
+print_something () {
+echo Hello $1
+return 5
+}
+print_something Mars
+print_something Jupiter
+echo The previous function has a return value of $?
+
+
+One way to get around this is to use Command Substitution 
+and have the function print the result (and only the result).
+
+Example:
+
+#!/bin/bash
+# Setting a return value to a function
+lines_in_file () {
+cat $1 | wc -l
+}
+num_lines=$( lines_in_file $1 )
+echo The file $1 has $num_lines lines in it
+
+Variable Scope:
+
+Scope refers to which parts of a script can see which variables. 
+By default a variable is global. 
+This means that it is visible everywhere in the script. 
+We may also create a variable as a local variable. 
+When we create a local variable within a function, 
+it is only visible within that function. 
+To do that we use the keyword local in front of the 
+variable the first time we set it's value.
+
+Syntax:
+
+local var_name=<var_value>
+
+It is generally considered good practice to use local variables 
+within functions so as to keep everything within the 
+function contained. This way variables are safer from 
+being inadvertently modified by another part of the script 
+which happens to have a variable with the same name (or vice versa).
+
+Exampel:
+
+#!/bin/bash
+# Experimenting with variable scope
+
+var_change () 
+{
+local var1='local 1'
+echo Inside function: var1 is $var1 : var2 is $var2
+var1='changed again'
+var2='2 changed again'
+}
+
+var1='global 1'
+var2='global 2'
+echo Before function call: var1 is $var1 : var2 is $var2
+var_change
+echo After function call: var1 is $var1 : var2 is $var2
+
+
+Example:
+
+#!/bin/sh
+
+# Define your function here
+Hello () {
+   echo "Hello World $1 $2"
+}
+
+# Invoke your function
+Hello Zara Ali
+
+#Output
+$./test.sh
+Hello World Zara Ali
+
+
+Example:
+
+#!/bin/sh
+function function_B {
+  echo "Function B."
+}
+function function_A {
+  echo "$1"
+}
+function adder {
+  echo "$(($1 + $2))"
+}
+
+# FUNCTION CALLS
+# Pass parameter to function A
+function_A "Function A."     
+
+# output:
+Function A.
+
+# Invoking function B
+function_B
+                   
+# output:
+ Function B.
+
+# Pass two parameters to function adder
+adder 12 56                  
+
+# output:
+# 68
+
+
+Example:
+
+#!/bin/sh
+
+myfunc()
+{
+  echo "\$1 is $1"
+  echo "\$2 is $2"
+  # cannot change $1 - we'd have to say:
+  # 1="Goodbye Cruel"
+  # which is not a valid syntax. However, we can
+  # change $a:
+  a="Goodbye Cruel"
+}
+
+### Main script starts here 
+
+a=Hello
+b=World
+myfunc $a $b
+echo "a is $a"
+echo "b is $b"
+
+
+factorial.sh
+#!/bin/sh
+
+factorial()
+{
+  if [ "$1" -gt "1" ]; then
+    i=`expr $1 - 1`
+    j=`factorial $i`
+    k=`expr $1 \* $j`
+    echo $k
+  else
+    echo 1
+  fi
+}
+
+while :
+do
+  echo "Enter a number:"
+  read x
+  factorial $x
+done             
+
+
+Example:
+
+#!/bin/sh
+fun1(){ x=100000;  echo " In fun() x = $x " ; }
+fun2(){ y=200000;  echo " In fun() y = $y " ; }
+  
+x=100 ; y=200
+echo "before calling d fun1() x=$x" 
+echo -e $(fun1)
+echo " after calling d fun1() x=$x"
+echo "before calling d fun2() y=$y" 
+fun2
+echo " after calling d fun() y=$y"
+output :
+
+before calling d fun1() x=100
+In fun() x = 100000
+ after calling d fun1() x=100
+before calling d fun2() y=200
+ In fun() y = 200000
+ after calling d fun() y=200000

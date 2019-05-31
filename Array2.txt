@@ -1,0 +1,387 @@
+Various Operations on Arrays
+
+Many of the standard string operations work on arrays . Look at the following sample script which implements some operations on arrays (including string operations).
+
+#!/bin/bash 
+
+array=( apple bat cat dog elephant frog ) 
+
+#print first element 
+echo ${array[0]} 
+echo ${array:0} 
+
+#display all elements 
+echo ${array[@]} 
+echo ${array[@]:0} 
+
+#display all elements except first one 
+echo ${array[@]:1} 
+
+#display elements in a range 
+echo ${array[@]:1:4} 
+
+#length of first element 
+echo ${#array[0]} 
+echo ${#array} 
+
+#number of elements 
+echo ${#array[*]} 
+echo ${#array[@]} 
+
+#replacing substring 
+echo ${array[@]//a/A} 
+
+exit 0
+
+Following is the output produced on executing the above script.
+
+apple 
+apple 
+apple bat cat dog elephant frog 
+apple bat cat dog elephant frog 
+bat cat dog elephant frog 
+bat cat dog elephant 
+5 
+5 
+6 
+6 
+Apple bAt cAt dog elephAnt frog
+
+
+
+Sorting an array in Bash using Bubble sort
+
+Prerequisite : Bubble Sort
+Given an array arr sort the array in ascending order using bash scripting.
+
+Examples:
+
+Input : 9 7 2 5
+Output :
+Array in sorted order :
+2 5 7 9
+
+
+Approach :
+For sorting the array bubble sort is the simplest technique. Bubble sort works by swapping the adjacent elements if they are in wrong order .
+Example:
+
+Given array - (9, 7, 2, 5)
+After first iteration - (7, 2, 5, 9)
+After second iteration - (2, 5, 7, 9)
+and so on...
+In this way, the array is sorted by placing the greater element at the end of the array .
+
+filter_none
+brightness_4
+# Sorting the array in Bash  
+# using Bubble sort 
+  
+# Static input of Array 
+arr = (10 8 20 100 12) 
+  
+echo "Array in original order"
+echo ${arr[*]} 
+  
+# Performing Bubble sort  
+for ((i = 0; i<5; i++)) 
+do
+      
+    for((j = i; j<5-i-1; j++)) 
+    do
+      
+        if ((${arr[j]} > ${arr[$((j+1))]})) 
+        then
+            # swap 
+            temp = ${arr[$j]} 
+            arr[$j] = ${arr[$((j+1))]}   
+            arr[$((j+1))] = $temp 
+        fi
+    done
+done
+  
+echo "Array in sorted order :"
+echo ${arr[*]} 
+Output :
+
+Array in sorted order :
+8 10 12 20 100
+
+
+To Print the Static Array in Bash
+
+1. By Using while-loop
+
+${#arr[@]} is used to find the size of Array.
+
+
+# !/bin/bash 
+# To declare static Array  
+arr=(1 12 31 4 5) 
+i=0 
+  
+# Loop upto size of array 
+# starting from index, i=0 
+while [ $i -lt ${#arr[@]} ] 
+do
+    # To print index, ith 
+    # element 
+    echo ${arr[$i]} 
+      
+    # Increment the i = i + 1 
+    i=`expr $i + 1` 
+done
+
+Output:
+
+1
+2
+3
+4
+5
+
+
+2. By Using for-loop
+
+# !/bin/bash 
+# To declare static Array  
+arr=(1 2 3 4 5) 
+  
+# loops iterate through a  
+# set of values until the 
+# list (arr) is exhausted 
+for i in "${arr[@]}"
+do
+    # access each element  
+    # as $i 
+    echo $i 
+done
+
+Output:
+
+1
+2
+3
+4
+5
+
+
+To Read the array elements at run time and then Print the Array.
+
+1. Using While-loop
+
+# !/bin/bash 
+# To input array at run 
+# time by using while-loop 
+  
+# echo -n is used to print 
+# message without new line 
+echo -n "Enter the Total numbers :"
+read n 
+echo "Enter numbers :"
+i=0 
+  
+# Read upto the size of  
+# given array starting from 
+# index, i=0 
+while [ $i -lt $n ] 
+do
+    # To input from user 
+    read a[$i] 
+  
+    # Increment the i = i + 1 
+    i=`expr $i + 1` 
+done
+  
+# To print array values  
+# starting from index, i=0 
+echo "Output :"
+i=0 
+  
+while [ $i -lt $n ] 
+do
+    echo ${a[$i]} 
+  
+    # To increment index 
+    # by 1, i=i+1  
+    i=`expr $i + 1` 
+done
+
+Output:
+
+Enter the Total numbers :3
+Enter numbers :
+1
+3
+5
+Output :
+1
+3
+5
+
+
+2. Using for-loop
+
+# !/bin/bash 
+# To input array at run  
+# time by using for-loop 
+  
+echo -n "Enter the Total numbers :"
+read n 
+echo "Enter numbers:"
+i=0 
+  
+# Read upto the size of  
+# given array starting  
+# from index, i=0 
+while [ $i -lt $n ] 
+do
+    # To input from user 
+    read a[$i] 
+  
+    # To increment index  
+    # by 1, i=i+1 
+    i=`expr $i + 1` 
+done
+  
+# Print the array starting 
+# from index, i=0 
+echo "Output :"
+  
+for i in "${a[@]}"
+do
+    # access each element as $i 
+    echo $i  
+done
+
+Output:
+
+Enter the Total numbers :3
+Enter numbers :
+1
+3
+5
+Output :
+1
+3
+5
+
+
+
+Binary search using shell script:
+
+echo “Enter the limit:”
+
+read n
+
+echo “Enter the numbers”
+
+for(( i=0 ;i<n; i++ ))
+
+do
+
+read m
+
+a[i]=$m
+
+done
+
+for(( i=1; i<n; i++ ))
+
+do
+
+for(( j=0; j<n-i; j++))
+
+do
+
+if [ ${a[$j]} -gt ${a[$j+1]} ]
+
+then
+
+t=${a[$j]}
+
+a[$j]=${a[$j+1]}
+
+a[$j+1]=$t
+
+fi
+
+done
+
+done
+
+echo “Sorted array is”
+
+for(( i=0; i<n; i++ ))
+
+do
+
+echo “${a[$i]}”
+
+done
+
+echo “Enter the element to be searched :”
+
+read s
+
+l=0
+
+c=0
+
+u=$(($n-1))
+
+while [ $l -le $u ]
+
+do
+
+mid=$(((( $l+$u ))/2 ))
+
+if [ $s -eq ${a[$mid]} ]
+
+then
+
+c=1
+
+break
+
+elif [ $s -lt ${a[$mid]} ]
+
+then
+
+u=$(($mid-1))
+
+else
+
+l=$(($mid+1))
+
+fi
+
+done
+
+if [ $c -eq 1 ]
+
+then
+
+echo “Element found at position $(($mid+1))”
+
+else
+
+echo “Element not found”
+
+fi
+
+OUTPUT
+
+Enter the limit:  5
+
+Enter the numbers
+
+4 2 6 3 7
+
+Sorted array is
+
+2 3 4 6 7
+
+Enter the number to be searched :7
+
+Element found in position 5
