@@ -1,0 +1,81 @@
+
+val l_drg_lkp='';
+val l_drg_3_cd='';
+val l_dacl_mjdc_cd='';
+val l_dacl_utln_lvl_3_cd='';
+
+
+l_drg_lkp=lookup("drg3lkp", in.mdlx_case_nb);
+  // join drg3lkp df) ==> 2 column(mdlx_case_nb,
+  //df1.join(df, df1(mdlx_case_nb) === df(mdlx_case_nb)).select(
+  mdlx_case_nb,drg_3_cd)
+
+l_drg_3_cd = is_defined(l_drg_lkp.drg_3_cd) && !is_blank(l_drg_lkp.drg_3_cd) ? l_drg_lkp.drg_3_cd : '999';
+            
+
+l_dacl_mjdc_cd =
+
+ if(is_defined(string_lrtrim(l_drg_3_cd)))
+{
+	first_defined( lookup("mdc hdm lkp", string_lrtrim(l_drg_3_cd)).dacl_mjdc_cd,   ' ')
+};
+
+
+
+if(dacl_snf_in=='1')
+{
+  l_dacl_utln_lvl_3_cd = 'SNF';
+}
+else if(dacl_baby_in =='1')
+{
+   l_dacl_utln_lvl_3_cd = 'SNF';
+}
+else if(string_lrtrim(first_defined(dacl_los_1_cd,dacl_mdlx_los_1_cd,' '))=='55')
+{
+	 l_dacl_utln_lvl_3_cd='ADA';
+}
+else if((string_lrtrim(first_defined(dtln.dacl_los_1_cd,dtln.dacl_mdlx_los_1_cd,' '))=='51'||
+    string_lrtrim(first_defined(dtln.dacl_los_1_cd,dacl_mdlx_los_1_cd,' '))=='52'||
+    string_lrtrim(first_defined(dacl_los_1_cd,dacl_mdlx_los_1_cd,' '))=='53'||
+    string_lrtrim(first_defined(dacl_los_1_cd,dacl_mdlx_los_1_cd,' '))=='56')
+	)
+{
+		  l_dacl_utln_lvl_3_cd='PSY';
+}
+else if(string_lrtrim(first_defined(string_lrtrim(in.dacl_utln_lvl_2_cd),string_lrtrim(in.dacl_mdlx_utl_2_cd), 'HO'))=='HO' &&
+  ((string_lrtrim(first_defined(dacl_los_1_cd,dacl_mdlx_los_1_cd,' '))=='I') ||
+    (string_lrtrim(first_defined(dacl_anc_cd,dacl_mdlx_anc_cd,' ')) >='450' &&
+     string_lrtrim(first_defined(dacl_anc_cd,dacl_mdlx_anc_cd,' ')) <='459')))
+{
+		  l_dacl_utln_lvl_3_cd='PSY';
+}
+else if(string_lrtrim(first_defined(string_lrtrim(in.dacl_utln_lvl_2_cd),string_lrtrim(in.dacl_mdlx_utl_2_cd), 'HO'))=='HO' && 
+in.summ.dacl_spc_hdr_cd == '36') 
+{
+	l_dacl_utln_lvl_3_cd = 'OTH';
+}
+else if(string_lrtrim(first_defined(string_lrtrim(in.header.dacl_utln_lvl_2_cd),string_lrtrim(in.summ.dacl_mdlx_utl_2_cd), 'HO'))=='HO' &&
+is_defined(lookup("spc_spg_hdm_lkp", string_lrtrim(in.summ.dacl_spc_hdr_cd)).dacl_utln_lvl_3_cd))
+{
+	l_dacl_utln_lvl_3_cd = lookup("spc_spg_hdm_lkp", string_lrtrim(in.summ.dacl_spc_hdr_cd)).dacl_utln_lvl_3_cd 
+}
+else if(string_lrtrim(first_defined(indacl_anc_cd,in.dacl_mdlx_anc_cd,' ')) >='360' &&
+                     string_lrtrim(first_defined(in.dacl_anc_cd,in.dacl_mdlx_anc_cd,' ')) <='369' )
+{
+	  l_dacl_utln_lvl_3_cd='SUR'; 
+}
+else{
+            if(is_null(l_drg_3_cd)) l_dacl_utln_lvl_3_cd='OTH'; 
+            else if(l_dacl_mjdc_cd=='20') l_dacl_utln_lvl_3_cd='ADA';
+            else if(l_dacl_mjdc_cd=='14'||l_dacl_mjdc_cd=='15') l_dacl_utln_lvl_3_cd='MAT';
+            else if(l_dacl_mjdc_cd=='19') l_dacl_utln_lvl_3_cd='PSY';
+            else if (is_defined(l_drg_3_cd))  l_dacl_utln_lvl_3_cd= lookup("mdc hdm lkp", l_drg_3_cd).dacl_mdc_svtp_cd;
+            else l_dacl_utln_lvl_3_cd='OTH';
+}
+
+
+  out.dacl_utln_lvl_3_cd :1: l_dacl_utln_lvl_3_cd;
+  out.dacl_utln_lvl_3_cd :2: 'OTH';
+  
+  out.dacl_drg_2_cd :: ' ';
+  out.dacl_drg_3_cd :: l_drg_3_cd;
