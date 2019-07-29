@@ -1,0 +1,60 @@
+Requirement:
+
+Compare database source & target queries data  at row level only with one of the columns data must be parametrized. Output must be written as csv format. Multiple source & target queries are allowed. Queries must be configured from config file.
+
+ Assumptions:
+
+Direct Tables are not allowed for source and target.
+Source & target data must contain all the below data types
+string, integer, float and date fields
+Row level check, by using string concatenation not allowed.
+Please assume all config parameters are configured always.
+Any reason source & target query schema structures are differ or columns order differs throw the error for a particular query and proceed for other queries execution. Program should not be stopped for one of the query problem.
+Project IDE: http://scala-ide.org/ (Eclipse Scala IDE)
+
+Database: MySQL (database name as unique name(Hash Key))
+
+Programming Language: Must be Spark Scala
+
+Spark Version : 2.2.*
+
+Scala Version: 2.11.*
+
+ Sample Config file:
+
+ db.source_connectionstr0=connection string
+
+db.source_query0=source database query (example: select * from emp_1. * must be substituted with all columns)
+
+db.target_connectionstr0=connection string
+
+db.target_query0=target database query (example: select * from emp_2. * must be substituted with all columns)
+
+db.param_col0=parameter column ( example: dept )
+
+db.param_col_val_list0=parameter columns values list (example values: 10,20)
+
+db.source_connectionstr1=connection string
+
+db.source_query1=source database query (example: select * from dept_1.* must be substituted with all columns)
+
+db.target_connectionstr1=connection string
+
+db.target_query1=target database query (example: select * from dept_2. * must be substituted with all columns)
+
+db.param_col1=parameter column ( example: dept )
+
+db.param_col_val_list1=parameter columns values list (example values: ‘SALES’,’ACCOUNTING’)
+
+ db.totalNoOfQueries=2
+
+ Deliverables:
+
+Database Scripts with database name as unique name(Hash Key)). 
+Drop table commands must exist to re-run the same script.
+Project source code
+Compiled jar file
+Spark Submit Command
+Config file (if possible single server config file deployment)
+Any other assumptions made based on programming challenges please publish those details as separate assumptions.txt file(Additional questions are not going to be answered at this time hence providing provision to add assumptions sheet).
+
